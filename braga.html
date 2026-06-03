@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRAGA — iPhones Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f3ef;
+    --cream: #e8e4dc;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --gray: #8a8680;
+    --dark-gray: #1c1a18;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.4rem 3rem;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+  .nav-links a {
+    color: var(--cream); text-decoration: none;
+    font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase;
+    opacity: 0.75; transition: opacity 0.2s, color 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--gold); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 3rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(201,168,76,0.08) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 80% at 10% 80%, rgba(201,168,76,0.04) 0%, transparent 60%),
+      linear-gradient(160deg, #111010 0%, #0a0a0a 60%, #100f0d 100%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); border: 1px solid rgba(201,168,76,0.4);
+    padding: 0.4rem 1rem; border-radius: 2px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 16vw, 14rem);
+    line-height: 0.88;
+    letter-spacing: -0.01em;
+    position: relative;
+    animation: fadeUp 0.9s 0.1s ease both;
+  }
+
+  .hero-title span { color: var(--gold); }
+
+  .hero-subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--gray);
+    max-width: 480px;
+    margin-top: 1.5rem;
+    line-height: 1.7;
+    animation: fadeUp 1s 0.2s ease both;
+  }
+
+  .hero-cta {
+    display: flex; gap: 1rem; margin-top: 2.5rem;
+    animation: fadeUp 1s 0.3s ease both;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.9rem 2rem; font-size: 0.82rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; font-family: 'DM Sans', sans-serif;
+    font-weight: 500; border-radius: 2px; transition: all 0.25s;
+    cursor: pointer; border: none;
+  }
+
+  .btn-primary {
+    background: var(--gold); color: var(--black);
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .btn-outline {
+    background: transparent; color: var(--white);
+    border: 1px solid rgba(245,243,239,0.25);
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+  .hero-float {
+    position: absolute; right: 6vw; top: 50%;
+    transform: translateY(-50%);
+    animation: fadeUp 1s 0.4s ease both, float 6s 1.4s ease-in-out infinite;
+  }
+
+  .iphone-mock {
+    width: clamp(180px, 22vw, 320px);
+    filter: drop-shadow(0 40px 80px rgba(201,168,76,0.2)) drop-shadow(0 0 40px rgba(201,168,76,0.1));
+  }
+
+  /* ─── TRUST BAR ─── */
+  .trust-bar {
+    border-top: 1px solid rgba(201,168,76,0.1);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    background: var(--dark-gray);
+    padding: 1.4rem 3rem;
+    display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap;
+  }
+
+  .trust-item {
+    display: flex; align-items: center; gap: 0.7rem;
+    font-size: 0.8rem; letter-spacing: 0.05em; color: var(--gray);
+    text-transform: uppercase;
+  }
+
+  .trust-icon { color: var(--gold); font-size: 1.1rem; }
+
+  /* ─── PHONES ─── */
+  .section { padding: 6rem 3rem; }
+
+  .section-label {
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.6rem;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1;
+    margin-bottom: 3.5rem;
+  }
+
+  .phones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5px;
+  }
+
+  .phone-card {
+    background: var(--dark-gray);
+    padding: 2.5rem 2rem;
+    position: relative; overflow: hidden;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+
+  .phone-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.06) 0%, transparent 60%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+
+  .phone-card:hover { transform: translateY(-4px); }
+  .phone-card:hover::before { opacity: 1; }
+
+  .phone-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px; background: var(--gold);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .phone-card:hover::after { transform: scaleX(1); }
+
+  .phone-model {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem; letter-spacing: 0.02em;
+    line-height: 1;
+  }
+
+  .phone-specs {
+    display: flex; gap: 0.6rem; flex-wrap: wrap;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .spec-tag {
+    font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold); padding: 0.25rem 0.6rem; border-radius: 2px;
+  }
+
+  .phone-color-dot {
+    display: inline-block;
+    width: 10px; height: 10px; border-radius: 50%;
+    margin-right: 0.4rem; vertical-align: middle;
+  }
+
+  .phone-color {
+    font-size: 0.78rem; color: var(--gray); margin-bottom: 1.8rem;
+  }
+
+  .phone-guarantee {
+    display: flex; gap: 1rem; flex-direction: column;
+  }
+
+  .guarantee-item {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.78rem; color: var(--gray);
+  }
+
+  .guarantee-item .dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--gold); flex-shrink: 0;
+  }
+
+  .phone-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem; color: var(--white);
+    letter-spacing: 0.03em; margin: 1.5rem 0 0;
+  }
+  .phone-price span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; color: var(--gray);
+    font-weight: 300; letter-spacing: 0.05em;
+    text-transform: uppercase; margin-right: 0.3rem;
+  }
+
+  .phone-cta {
+    margin-top: 1.2rem;
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold); text-decoration: none; font-weight: 500;
+    transition: gap 0.2s;
+  }
+  .phone-cta:hover { gap: 1rem; }
+
+  .phone-num {
+    position: absolute; top: 1.5rem; right: 1.8rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem; color: rgba(201,168,76,0.06);
+    line-height: 1; pointer-events: none;
+    user-select: none;
+  }
+
+  /* ─── ABOUT ─── */
+  .about {
+    background: var(--dark-gray);
+    padding: 6rem 3rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+  }
+
+  @media (max-width: 768px) {
+    .about { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-float { display: none; }
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .section, .about { padding: 4rem 1.5rem; }
+    .hero { padding: 0 1.5rem 4rem; }
+    .trust-bar { gap: 2rem; padding: 1.2rem 1.5rem; }
+  }
+
+  .about-label { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+
+  .about-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 5vw, 4rem); line-height: 1.05;
+    margin-bottom: 1.8rem;
+  }
+
+  .about-text { color: var(--gray); line-height: 1.9; font-size: 0.92rem; margin-bottom: 1.2rem; }
+
+  .ceo-card {
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 2rem; border-radius: 2px;
+    background: rgba(201,168,76,0.03);
+  }
+
+  .ceo-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; color: var(--gold); letter-spacing: 0.05em;
+  }
+
+  .ceo-title {
+    font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gray); margin-bottom: 1rem;
+  }
+
+  .ceo-quote { font-style: italic; color: var(--cream); font-size: 0.92rem; line-height: 1.7; }
+  .ceo-quote::before { content: '"'; color: var(--gold); font-size: 2rem; line-height: 0; vertical-align: -0.6rem; margin-right: 0.2rem; }
+
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+  .stat-box {
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 1.5rem;
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem; color: var(--gold); line-height: 1;
+  }
+
+  .stat-desc { font-size: 0.75rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.3rem; }
+
+  /* ─── CONTACT ─── */
+  .contact { padding: 6rem 3rem; text-align: center; }
+
+  .contact-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 1; margin-bottom: 1rem;
+  }
+
+  .contact-sub { color: var(--gray); margin-bottom: 3rem; font-size: 0.95rem; }
+
+  .contact-cards {
+    display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
+    max-width: 700px; margin: 0 auto;
+  }
+
+  .contact-card {
+    background: var(--dark-gray);
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 2rem 2.5rem; flex: 1; min-width: 200px;
+    text-decoration: none; color: var(--white);
+    transition: all 0.25s; border-radius: 2px;
+  }
+
+  .contact-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-4px);
+    background: rgba(201,168,76,0.05);
+  }
+
+  .contact-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+  .contact-type { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.3rem; }
+  .contact-value { font-size: 1rem; font-weight: 500; color: var(--gold); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid rgba(201,168,76,0.1);
+    padding: 2rem 3rem;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  }
+
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--gold); letter-spacing: 0.12em; }
+  .footer-copy { font-size: 0.75rem; color: var(--gray); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(-50%) translateY(0px); }
+    50% { transform: translateY(-50%) translateY(-18px); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">BRAGA</a>
+  <ul class="nav-links">
+    <li><a href="#phones">Estoque</a></li>
+    <li><a href="#about">Sobre</a></li>
+    <li><a href="#contact">Contato</a></li>
+  </ul>
+  <a href="https://wa.me/5512988977093" target="_blank" class="btn btn-primary" style="padding:0.6rem 1.4rem;font-size:0.75rem;">
+    💬 WhatsApp
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-float">
+    <svg class="iphone-mock" viewBox="0 0 220 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="8" y="8" width="204" height="424" rx="32" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+      <rect x="14" y="14" width="192" height="412" rx="28" fill="#111" stroke="#222" stroke-width="0.5"/>
+      <!-- Screen -->
+      <rect x="18" y="18" width="184" height="404" rx="24" fill="#0d0d0d"/>
+      <!-- Dynamic island -->
+      <rect x="78" y="28" width="64" height="18" rx="9" fill="#000"/>
+      <!-- Screen content glow -->
+      <rect x="30" y="80" width="160" height="280" rx="8" fill="url(#screenGlow)"/>
+      <!-- Apple logo area -->
+      <circle cx="110" cy="380" r="16" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1"/>
+      <!-- Side buttons -->
+      <rect x="0" y="100" width="8" height="40" rx="3" fill="#1a1a1a" stroke="#333"/>
+      <rect x="0" y="150" width="8" height="60" rx="3" fill="#1a1a1a" stroke="#333"/>
+      <rect x="212" y="130" width="8" height="70" rx="3" fill="#1a1a1a" stroke="#333"/>
+      <defs>
+        <radialGradient id="screenGlow" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.12"/>
+          <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <div style="position:relative;z-index:1;">
+    <div class="hero-badge">✦ Premium · Original · Garantido</div>
+    <h1 class="hero-title">
+      BRAGA<br><span>iPHONES</span>
+    </h1>
+    <p class="hero-subtitle">
+      iPhones novos e seminovos com peças 100% originais e bateria acima de 80% — qualidade que você pode confiar.
+    </p>
+    <div class="hero-cta">
+      <a href="#phones" class="btn btn-primary">Ver Estoque →</a>
+      <a href="#contact" class="btn btn-outline">Falar Conosco</a>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item"><span class="trust-icon">🔋</span>Bateria +80%</div>
+  <div class="trust-item"><span class="trust-icon">⚙️</span>Peças Originais</div>
+  <div class="trust-item"><span class="trust-icon">✅</span>Todos Testados</div>
+  <div class="trust-item"><span class="trust-icon">📦</span>Novo &amp; Seminovo</div>
+</div>
+
+<!-- PHONES -->
+<section class="section" id="phones">
+  <div class="section-label">✦ Estoque Disponível</div>
+  <h2 class="section-title">Nossos iPhones</h2>
+
+  <div class="phones-grid">
+
+    <!-- iPhone 13 -->
+    <div class="phone-card">
+      <div class="phone-num">13</div>
+      <div class="phone-model">iPhone 13</div>
+      <div class="phone-specs">
+        <span class="spec-tag">128 GB</span>
+        <span class="spec-tag">Bateria +80%</span>
+        <span class="spec-tag">Original</span>
+      </div>
+      <div class="phone-color">
+        <span class="phone-color-dot" style="background:#f5f5f0;border:1px solid #555;"></span>
+        Branco Estelar
+      </div>
+      <div class="phone-guarantee">
+        <div class="guarantee-item"><div class="dot"></div>Peças 100% originais Apple</div>
+        <div class="guarantee-item"><div class="dot"></div>Saúde da bateria acima de 80%</div>
+        <div class="guarantee-item"><div class="dot"></div>Testado e verificado</div>
+      </div>
+      <div class="phone-price"><span>R$</span>2.200</div>
+      <a href="https://wa.me/5512988977093?text=Olá! Tenho interesse no iPhone 13 128GB Branco." target="_blank" class="phone-cta">
+        Tenho Interesse <span>→</span>
+      </a>
+    </div>
+
+    <!-- iPhone 12 -->
+    <div class="phone-card">
+      <div class="phone-num">12</div>
+      <div class="phone-model">iPhone 12</div>
+      <div class="phone-specs">
+        <span class="spec-tag">128 GB</span>
+        <span class="spec-tag">Bateria +80%</span>
+        <span class="spec-tag">Original</span>
+      </div>
+      <div class="phone-color">
+        <span class="phone-color-dot" style="background:#1a1a1a;border:1px solid #555;"></span>
+        Preto Meia-Noite
+      </div>
+      <div class="phone-guarantee">
+        <div class="guarantee-item"><div class="dot"></div>Peças 100% originais Apple</div>
+        <div class="guarantee-item"><div class="dot"></div>Saúde da bateria acima de 80%</div>
+        <div class="guarantee-item"><div class="dot"></div>Testado e verificado</div>
+      </div>
+      <div class="phone-price"><span>R$</span>1.800</div>
+      <a href="https://wa.me/5512988977093?text=Olá! Tenho interesse no iPhone 12 128GB Preto." target="_blank" class="phone-cta">
+        Tenho Interesse <span>→</span>
+      </a>
+    </div>
+
+    <!-- iPhone 11 -->
+    <div class="phone-card">
+      <div class="phone-num">11</div>
+      <div class="phone-model">iPhone 11</div>
+      <div class="phone-specs">
+        <span class="spec-tag">128 GB</span>
+        <span class="spec-tag">Bateria +80%</span>
+        <span class="spec-tag">Original</span>
+      </div>
+      <div class="phone-color">
+        <span class="phone-color-dot" style="background:#1a1a1a;border:1px solid #555;"></span>
+        Preto
+      </div>
+      <div class="phone-guarantee">
+        <div class="guarantee-item"><div class="dot"></div>Peças 100% originais Apple</div>
+        <div class="guarantee-item"><div class="dot"></div>Saúde da bateria acima de 80%</div>
+        <div class="guarantee-item"><div class="dot"></div>Testado e verificado</div>
+      </div>
+      <div class="phone-price"><span>R$</span>1.500</div>
+      <a href="https://wa.me/5512988977093?text=Olá! Tenho interesse no iPhone 11 128GB Preto." target="_blank" class="phone-cta">
+        Tenho Interesse <span>→</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div>
+    <div class="about-label">✦ Sobre a Braga</div>
+    <h2 class="about-title">Por que escolher a Braga?</h2>
+    <p class="about-text">
+      Na Braga, cada iPhone passa por uma inspeção rigorosa antes de ir para o cliente. Trabalhamos apenas com dispositivos que possuem peças originais Apple e bateria com saúde acima de 80% — sem surpresas depois da compra.
+    </p>
+    <p class="about-text">
+      Nossa missão é simples: entregar qualidade real com transparência total. Você sabe exatamente o que está comprando.
+    </p>
+    <div class="ceo-card" style="margin-top:2rem;">
+      <div class="ceo-name">Samuel Braga</div>
+      <div class="ceo-title">CEO &amp; Fundador</div>
+      <p class="ceo-quote">
+        Cada aparelho que vendemos eu mesmo aprovaria para usar. Esse é o nosso padrão.
+      </p>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-box">
+      <div class="stat-num">100%</div>
+      <div class="stat-desc">Peças Originais</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">+80%</div>
+      <div class="stat-desc">Saúde de Bateria</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">3</div>
+      <div class="stat-desc">Modelos Disponíveis</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">✓</div>
+      <div class="stat-desc">Todos Testados</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-label">✦ Fale Conosco</div>
+  <h2 class="contact-title">Pronto para<br>comprar?</h2>
+  <p class="contact-sub">Entre em contato pelo WhatsApp ou Instagram e tire todas as suas dúvidas.</p>
+
+  <div class="contact-cards">
+    <a href="https://wa.me/5512988977093" target="_blank" class="contact-card">
+      <div class="contact-icon">💬</div>
+      <div class="contact-type">WhatsApp / Ligação</div>
+      <div class="contact-value">(12) 98897-7093</div>
+    </a>
+    <a href="https://instagram.com/bragaxz022" target="_blank" class="contact-card">
+      <div class="contact-icon">📸</div>
+      <div class="contact-type">Instagram</div>
+      <div class="contact-value">@bragaxz022</div>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">BRAGA</div>
+  <div class="footer-copy">© 2025 Braga iPhones — Todos os direitos reservados.</div>
+</footer>
+
+</body>
+</html>
